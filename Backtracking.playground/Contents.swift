@@ -1,5 +1,40 @@
 import UIKit
 
+//131. Palindrome Partitioning
+func partition(_ s: String) -> [[String]] {
+    
+    func isPalindrome(_ s: [Character], _ left: Int, _ right: Int) -> Bool {
+        var left = left, right = right
+        while left < right {
+            if s[left] != s[right] { return false }
+            left += 1
+            right -= 1
+        }
+        return true
+    }
+    
+    func backtrack(_ res: inout [[String]], _ tracks: inout [String], _ s: [Character], _ start: Int) {
+        if start == s.count {
+            res.append(tracks)
+            return
+        }
+        
+        for i in start..<s.count {
+            if isPalindrome(s, start, i) {
+                tracks.append(String(s[start...i]))
+                backtrack(&res, &tracks, s, i+1)
+                tracks.removeLast()
+            }
+        }
+    }
+    
+    var res = [[String]](), tracks = [String]()
+    backtrack(&res, &tracks, Array(s), 0)
+    
+    return res
+}
+
+
 //79. Word Search
 func exist(_ board: [[Character]], _ word: String) -> Bool {
  

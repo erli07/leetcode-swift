@@ -1,5 +1,31 @@
 import UIKit
 
+//139. Word Break
+func wordBreak(_ s: String, _ wordDict: [String]) -> Bool {
+    
+    return false
+}
+
+
+//91. Decode Ways
+func numDecodings(_ s: String) -> Int {
+    var dp = Array(repeating: 0, count: s.count+1), s = Array(s)
+    dp[0] = 1
+    dp[1] = s[0] == "0" ? 0 : 1
+    if s.count < 2 { return dp[1] }
+    for i in 2...s.count {
+        if s[i-1].wholeNumberValue! > 0 {
+            dp[i] += dp[i-1]
+        }
+        let val = s[i-2].wholeNumberValue! * 10 + s[i-1].wholeNumberValue!
+        if val >= 10 && val <= 26 {
+            dp[i] += dp[i-2]
+        }
+    }
+    return dp[s.count]
+}
+
+
 //63. Unique Paths II
 func uniquePathsWithObstacles(_ obstacleGrid: [[Int]]) -> Int {
     

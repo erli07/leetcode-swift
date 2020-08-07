@@ -1,5 +1,64 @@
 import UIKit
 
+//118. Pascal's Triangle
+func generate(_ numRows: Int) -> [[Int]] {
+    guard numRows > 0 else { return [] }
+    var prev = [Int](), res = [[1]]
+    if numRows == 1 { return res }
+    for i in 2...numRows {
+        var arr = Array(repeating: 1, count: i)
+        for j in 1..<i-1 {
+            arr[j] = prev[j-1]+prev[j]
+            //arr[j] = res[i-1][j-1]+res[i-1][j]
+        }
+        res.append(arr)
+        prev = arr
+    }
+
+    return res
+}
+
+
+//88. Merge Sorted Array
+func merge(_ nums1: inout [Int], _ m: Int, _ nums2: [Int], _ n: Int) {
+    
+    var i = m-1, j = n-1, k = m+n-1
+    while i >= 0 && j >= 0 {
+        if nums1[i] > nums2[j] {
+            nums1[k] = nums1[i]
+            i -= 1
+        } else {
+            nums1[k] = nums2[j]
+            j -= 1
+        }
+        k -= 1
+    }
+    while j >= 0 {
+        nums1[k] = nums2[j]
+        k -= 1
+        j -= 1
+    }
+}
+
+//66. Plus One
+func plusOne(_ digits: [Int]) -> [Int] {
+    
+    var i = digits.count-1, digits = digits
+    while i >= 0 && digits[i] == 9 {
+        digits[i] = 0
+        i -= 1
+    }
+    
+    if i == -1 {
+        digits.insert(1, at: 0)
+    } else {
+        digits[i] += 1
+    }
+    
+    return digits
+}
+
+
 //26. Remove Duplicates from Sorted Array
 func removeDuplicates(_ nums: inout [Int]) -> Int {
     guard nums.count > 0 else { return 0 }

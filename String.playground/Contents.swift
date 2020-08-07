@@ -1,5 +1,17 @@
 import UIKit
 
+//49. Group Anagrams
+func groupAnagrams(_ strs: [String]) -> [[String]] {
+ 
+    var dict = [String: [String]]()
+    for str in strs {
+        let key = String(str.sorted())
+        dict[key, default: []].append(str)
+    }
+    return Array(dict.values)
+}
+
+
 //28. Implement strStr()
 func strStr(_ haystack: String, _ needle: String) -> Int {
     guard needle != "" else { return 0 }
