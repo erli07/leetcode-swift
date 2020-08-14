@@ -1,5 +1,72 @@
 import UIKit
 
+//283. Move Zeroes
+func moveZeroes(_ nums: inout [Int]) {
+
+    var idx = 0
+    for i in 0..<nums.count {
+        if nums[i] != 0 {
+            if i == idx { continue }
+            nums[idx] = nums[i]
+            idx += 1
+        }
+    }
+    
+    while idx < nums.count {
+        nums[idx] = 0
+        idx += 1
+    }
+}
+
+
+//268. Missing Number
+func missingNumber(_ nums: [Int]) -> Int {
+    
+    var t1 = 0, t2 = 0
+    for i in 0..<nums.count {
+        t1 += (i+1)
+        t2 += nums[i]
+    }
+    return t1 - t2
+}
+
+
+//189. Rotate Array
+func rotate(_ nums: inout [Int], _ k: Int) {
+    
+    func reverse(_ nums: inout [Int], _ lo: Int, _ hi: Int) {
+        var lo = lo, hi = hi
+        while lo < hi {
+            nums.swapAt(lo, hi)
+            lo += 1
+            hi -= 1
+        }
+    }
+    let k = k % nums.count
+    reverse(&nums, 0, nums.count-1-k)
+    reverse(&nums, nums.count-k, nums.count-1)
+    reverse(&nums, 0, nums.count-1)
+}
+
+
+//169. Majority Element
+func majorityElement(_ nums: [Int]) -> Int {
+
+    var major = 0,  count = 0
+    for n in nums {
+        if count == 0 {
+            major = n
+            count += 1
+        } else if major == n {
+            count += 1
+        } else {
+            count -= 1
+        }
+    }
+    return major
+}
+
+
 //118. Pascal's Triangle
 func generate(_ numRows: Int) -> [[Int]] {
     guard numRows > 0 else { return [] }

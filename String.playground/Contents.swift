@@ -1,5 +1,47 @@
 import UIKit
 
+//412. Fizz Buzz
+func fizzBuzz(_ n: Int) -> [String] {
+    var res = [String](), fizz = 0, buzz = 0
+    for i in 1...n {
+        fizz += 1
+        buzz += 1
+        if fizz == 3 && buzz == 5 {
+            res.append("FizzBuzz")
+            fizz = 0
+            buzz = 0
+        } else if fizz == 3 {
+            res.append("Fizz")
+            fizz = 0
+        } else if buzz == 5 {
+            res.append("Buzz")
+            buzz = 0
+        } else {
+            res.append(String(i))
+        }
+    }
+    return res
+}
+
+//125. Valid Palindrome
+func isPalindrome(_ s: String) -> Bool {
+    var s = Array(s.lowercased()), left = 0, right = s.count-1
+    while left < right {
+        while !s[left].isLetter && !s[left].isNumber && left < right {
+            left += 1
+        }
+        while !s[right].isLetter && !s[right].isNumber && left < right {
+            right -= 1
+        }
+        if s[left] != s[right] { return false }
+        left += 1
+        right -= 1
+    }
+    
+    return true
+}
+
+
 //49. Group Anagrams
 func groupAnagrams(_ strs: [String]) -> [[String]] {
  

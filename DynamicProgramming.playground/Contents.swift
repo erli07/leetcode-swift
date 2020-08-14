@@ -1,9 +1,66 @@
 import UIKit
 
+//213. House Robber II
+func rob2(_ nums: [Int]) -> Int {
+    if nums.count < 2 { return nums.last ?? 0 }
+    func rob(_ nums: [Int], _ lo: Int, _ hi: Int) -> Int {
+        var a = 0, b = 0
+        for i in lo..<hi {
+            let temp = b
+            b = max(a+nums[i], b)
+            a = temp
+        }
+        return b
+    }
+    return max(rob(nums, 0, nums.count-1), rob(nums, 1, nums.count))
+}
+
+
+//198. House Robber
+func rob(_ nums: [Int]) -> Int {
+    var a = 0, b = 0
+    for val in nums {
+        let temp = b
+        b = max(a+val, b)
+        a = temp
+    }
+    return b
+    
+//    let n = nums.count
+//    if n == 0 { return 0 }
+//    for i in 0..<n {
+//        if i % 2 == 0 {
+//            a1 = max(a1+nums[i], a2)
+//        } else {
+//            a2 = max(a2+nums[i], a1)
+//        }
+//    }
+//    return max(a1, a2)
+    
+//    var dp = Array(repeating: 0, count: n+1)
+//    dp[1] = nums[0]
+//    for i in 2...n {
+//        dp[i] = max(dp[i-1], dp[i-2] + nums[i-1])
+//    }
+//    return dp[n]
+}
+
+
 //139. Word Break
 func wordBreak(_ s: String, _ wordDict: [String]) -> Bool {
+    let n = s.count, s = Array(s), wordDict = Set(wordDict)
+    var dp = Array(repeating: false, count: n+1)
+    dp[0] = true
+    for i in 1...n {
+        for j in 0..<i {
+            if dp[j] &&  wordDict.contains(String(s[j..<i])) {
+                dp[i] = true
+                break
+            }
+        }
+    }
     
-    return false
+    return dp[n]
 }
 
 
