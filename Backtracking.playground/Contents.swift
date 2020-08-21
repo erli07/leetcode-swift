@@ -1,5 +1,52 @@
 import UIKit
 
+//40. Combination Sum II
+func combinationSum2(_ candidates: [Int], _ target: Int) -> [[Int]] {
+    var res = [[Int]](), track = [Int]()
+    
+    func backtrack(_ res: inout [[Int]], _ track: inout [Int], _ candidates: [Int], _ target: Int,  _ sum: Int, _ lo: Int) {
+        if sum == target {
+            res.append(track)
+            return
+        }
+                
+        for i in lo..<candidates.count {
+            if i > lo && candidates[i] == candidates[i-1] { continue }
+            if sum + candidates[i] > target { return }
+            track.append(candidates[i])
+            backtrack(&res, &track, candidates, target, sum+candidates[i], i+1)
+            track.removeLast()
+        }
+    }
+    
+    backtrack(&res, &track, candidates.sorted(), target, 0, 0)
+    return res
+}
+
+
+//39. Combination Sum
+func combinationSum(_ candidates: [Int], _ target: Int) -> [[Int]] {
+    var res = [[Int]](), track = [Int]()
+    
+    func backtrack(_ res: inout [[Int]], _ track: inout [Int], _ candidates: [Int], _ target: Int,  _ sum: Int, _ lo: Int) {
+        if sum == target {
+            res.append(track)
+            return
+        }
+                
+        for i in lo..<candidates.count {
+            if sum + candidates[i] > target { return }
+            track.append(candidates[i])
+            backtrack(&res, &track, candidates, target, sum+candidates[i], i)
+            track.removeLast()
+        }
+    }
+    
+    backtrack(&res, &track, candidates.sorted(), target, 0, 0)
+    return res
+}
+
+
 //131. Palindrome Partitioning
 func partition(_ s: String) -> [[String]] {
     

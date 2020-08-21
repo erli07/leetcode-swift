@@ -1,5 +1,34 @@
 import UIKit
 
+//334. Increasing Triplet Subsequence
+func increasingTriplet(_ nums: [Int]) -> Bool {
+    var first = Int.max, second = Int.max
+    for n in nums {
+        if n <= first { first = n }
+        else if n <= second { second = n }
+        else { return true }
+    }
+    return false
+}
+
+//238. Product of Array Except Self
+func productExceptSelf(_ nums: [Int]) -> [Int] {
+    let n = nums.count
+    var res = Array(repeating: 0, count: n)
+    res[0] = 1
+    for i in 1..<n {
+        res[i] = res[i-1] * nums[i-1]
+    }
+
+    var right = 1
+    for i in (0..<n).reversed() {
+        res[i] *= right
+        right *= nums[i]
+    }
+    return res
+}
+
+
 //283. Move Zeroes
 func moveZeroes(_ nums: inout [Int]) {
 

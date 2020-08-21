@@ -1,5 +1,33 @@
 import UIKit
 
+//347. Top K Frequent Elements
+func topKFrequent(_ nums: [Int], _ k: Int) -> [Int] {
+ 
+    var dict = [Int: Int](), maxfrequent = 0
+    for n in nums {
+        dict[n, default: 0] += 1
+        maxfrequent = max(maxfrequent, dict[n]!)
+    }
+    
+    var bucket: [[Int]] = Array(repeating: [], count: maxfrequent+1)
+    for key in dict.keys {
+        if let frequent = dict[key] {
+            bucket[frequent].append(key)
+        }
+    }
+    
+    var res = [Int](), i = bucket.count-1
+    while res.count < k && i >= 0 {
+        if bucket[i].count != 0 {
+            res.append(contentsOf: bucket[i])
+        }
+        i -= 1
+    }
+    
+    return res
+}
+
+
 //387. First Unique Character in a String
 func firstUniqChar(_ s: String) -> Int {
     var dict = [Character: Int]()
