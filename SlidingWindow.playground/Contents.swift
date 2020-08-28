@@ -1,6 +1,48 @@
 import UIKit
 
 
+//1004. Max Consecutive Ones III
+func longestOnes(_ A: [Int], _ K: Int) -> Int {
+    var start = 0, end = 0, maxCount = 0, k = K
+    while end < A.count {
+        if A[end] == 1 || k > 0 {
+            if A[end] == 0 { k -= 1 }
+            end += 1
+        } else {
+            maxCount = max(maxCount, end - start)
+            k += A[start] == 0 ? 1 : 0
+            start += 1
+        }
+    }
+    return max(maxCount, end - start)
+}
+
+
+//567. Permutation in String
+func checkInclusion(_ s1: String, _ s2: String) -> Bool {
+    var s2 = Array(s2), len1 = s1.count, len2 = s2.count
+    var count = Array(repeating: 0, count: 26)
+    for ch in s1 {
+        count[Int(ch.asciiValue! - Character("a").asciiValue!)] += 1
+    }
+    
+    func isAllZero() -> Bool {
+        for n in count {
+            if n != 0 { return false }
+        }
+        return true
+    }
+    
+    for i in 0..<len2 {
+        count[Int(s2[i].asciiValue! - Character("a").asciiValue!)] -= 1
+        if i >= len1 { count[Int(s2[i-len1].asciiValue! - Character("a").asciiValue!)] += 1 }
+        if isAllZero() { return true }
+    }
+    
+    return false
+}
+
+
 //219. Contains Duplicate II
 func containsNearbyDuplicate(_ nums: [Int], _ k: Int) -> Bool {
     var set = Set<Int>()

@@ -1,5 +1,25 @@
 import UIKit
 
+//978. Longest Turbulent Subarray
+func maxTurbulenceSize(_ A: [Int]) -> Int {
+    var inc = 1, dec = 1, len = 1
+    for i in 1..<A.count {
+        if A[i] > A[i-1] {
+            inc = dec + 1
+            dec = 1
+        } else if A[i] < A[i-1] {
+            dec = inc + 1
+            inc = 1
+        } else {
+            inc = 1
+            dec = 1
+        }
+        len = max(inc, dec, len)
+    }
+    return len
+}
+
+
 //279. Perfect Squares
 func numSquares(_ n: Int) -> Int {
     var dp = Array(repeating: Int.max, count: n+1)

@@ -1,5 +1,19 @@
 import UIKit
 
+//485. Max Consecutive Ones
+func findMaxConsecutiveOnes(_ nums: [Int]) -> Int {
+    var count = 0, maxCount = 0
+    for n in nums {
+        if n == 0 {
+            maxCount = max(maxCount, count)
+            count = 0
+        } else {
+            count += 1
+        }
+    }
+    return max(maxCount, count)
+}
+
 //334. Increasing Triplet Subsequence
 func increasingTriplet(_ nums: [Int]) -> Bool {
     var first = Int.max, second = Int.max
