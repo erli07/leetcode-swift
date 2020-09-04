@@ -14,6 +14,123 @@ public class ListNode {
     public init(_ val: Int, _ next: ListNode?) { self.val = val; self.next = next; }
 }
 
+
+//725. Split Linked List in Parts
+func splitListToParts(_ root: ListNode?, _ k: Int) -> [ListNode?] {
+    var len = 0, node = root, res = Array<ListNode?>(repeating: nil, count: k)
+    while node != nil {
+        len += 1
+        node = node?.next
+    }
+    node = root
+    
+    var q = len / k, r = q % k, prev = node, i = 0
+    while i < k && node != nil {
+        res[i] = node
+        for _ in 0..<(q + r > 0 ? 1 : 0) {
+            prev = node
+            node = node?.next
+        }
+        i += 1
+        r -= 1
+        prev?.next = nil
+    }
+    
+    return res
+}
+
+//86. Partition List
+func partition(_ head: ListNode?, _ x: Int) -> ListNode? {
+    
+    let dummy1 = ListNode(0), dummy2 = ListNode(0)
+    var h1 = dummy1, h2 = dummy2, head = head
+    
+    while head != nil {
+        if head!.val < x {
+            h1.next = head
+            h1 = h1.next!
+        } else {
+            h2.next = head
+            h2 = h2.next!
+        }
+        head = head?.next
+    }
+        
+    h2.next = nil
+    h1.next = dummy2.next
+    
+    return dummy1.next
+}
+
+//445. Add Two Numbers II
+func addTwoNumbers(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
+ 
+    var len1 = 0, len2 = 0, list1 = l1, list2 = l2
+    while list1 != nil {
+        len1 += 1
+        list1 = list1?.next
+    }
+    
+    while list2 != nil {
+        len2 += 1
+        list2 = list2?.next
+    }
+    
+    var l = len1 > len2 ? l1 : l2, s = len1 > len2 ? l2 : l1,
+    long = max(len1, len2), short = min(len1, len2), stack = [Int]()
+    while long > 0 {
+        if long <= short {
+            stack.append(l!.val + s!.val)
+            s = s?.next
+        } else {
+            stack.append(l!.val)
+        }
+        l = l?.next
+        long -= 1
+    }
+    
+    let dummy = ListNode(0)
+    var carry = 0
+    while !stack.isEmpty {
+        let val = stack.removeLast() + carry
+        carry = val / 10
+        dummy.next = ListNode(val % 10, dummy.next)
+    }
+    
+    if carry > 0 { dummy.next = ListNode(carry, dummy.next) }
+    return dummy.next
+    
+}
+
+//143. Reorder List
+func reorderList(_ head: ListNode?) {
+ 
+    var slow = head, fast = head
+    while fast?.next != nil && fast?.next?.next != nil {
+        slow = slow?.next
+        fast = fast?.next?.next
+    }
+    
+    let mid = slow, cur = slow?.next
+    while cur?.next != nil {
+        let next = cur?.next
+        cur?.next = next?.next
+        next?.next = mid?.next
+        mid?.next = next
+    }
+    
+    var h1 = head, h2 = mid?.next
+    while h2 != nil  {
+        let next = h1?.next
+        h1?.next = h2
+        h2 = h2?.next
+        mid?.next = h2
+        h1?.next?.next = next
+        h1 = next
+    }
+    
+}
+
 do {
     func mergeSort(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
         

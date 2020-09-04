@@ -285,14 +285,20 @@ func lengthOfLIS(_ nums: [Int]) -> Int {
 }
 
 //152. Maximum Product Subarray
-
 func maxProduct(_ nums: [Int]) -> Int {
     
-    var array = Int(0)
-    
-    return 0
-}
+    var r = nums[0], imax = r, imin = r
+    for i in 1..<nums.count {
+        if nums[i] < 0 {
+            swap(&imax, &imin)
+        }
+        imax = max(nums[i], imax * nums[i])
+        imin = min(nums[i], imin * nums[i])
 
+        r = max(r, imax)
+    }
+    return r
+}
 
 
 //64. Minimum Path Sum
